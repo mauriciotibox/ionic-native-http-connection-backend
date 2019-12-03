@@ -1,0 +1,1 @@
+[{"__symbolic":"module","version":4,"metadata":{},"exports":[{"from":"./http/native-http-backend"},{"from":"./http/native-http-fallback"},{"from":"./http/native-http-module"},{"from":"./native-http-backend"},{"from":"./native-http-fallback"},{"from":"./native-http-module"}]}]
