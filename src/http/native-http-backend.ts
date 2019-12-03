@@ -178,15 +178,23 @@ export class NativeHttpConnectionD implements Connection {
             return {};
         }
 
-        return (/^[?#]/.test(query) ? query.slice(1) : query)
-            .split('&')
-            .reduce((params: { [name: string]: string }, param) => {
-                let [key, value] = param.split('=');
-                params[key] = value
-                    ? decodeURIComponent(value.replace(/\+/g, ' '))
-                    : '';
-                return params;
-            }, {});
+        let paramsObj = (/^[?#]/.test(query) ? query.slice(1) : query).split('&');
+        let obj = {};
+        for (let i in paramsObj) {
+            let param = paramsObj[i].split('=');
+            if (obj[param[0]] != undefined && Array.isArray(obj[param[0]])) {
+                obj[param[0]][obj[param[0]].length] = decodeURIComponent(param[1])
+            } else if (obj[param[0]] != undefined) {
+                let n = [];
+                n[0] = decodeURIComponent(obj[param[0]]);
+                n[1] = decodeURIComponent(param[1]);
+                obj[param[0]] = n
+            } else {
+                obj[param[0]] = decodeURIComponent(param[1])
+            }
+        }
+        
+        return obj;
     }
 }
 
